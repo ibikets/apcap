@@ -12,6 +12,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -94,44 +96,7 @@
             </div>
 
             <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Starter Pages
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-circle nav-icon"></i>
-                                    <p>Active Page</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-circle nav-icon"></i>
-                                    <p>Inactive Page</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Simple Link
-                                <span class="right badge badge-danger">New</span>
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            @include('includes.side_menu')
             <!-- /.sidebar-menu -->
         </div>
         <!-- /.sidebar -->
@@ -142,9 +107,9 @@
 
 
         <!-- Main content -->
-        <div class="content">
+        <div class="content" id="app">
             <div class="container-fluid">
-                <div class="row justify-content-center">
+
 
                     @yield('content')
 
@@ -163,13 +128,24 @@
             Anything you want
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2019 <a href="https://fifthware.com">BitsPark Limited</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/toastr.min.js') }}"></script>
+<script>
+    @if(Session::has('success'))
+    toastr.success("{{ Session::get('success') }}")
+    @elseif (Session::has('info'))
+    toastr.info("{{ Session::get('info') }}")
+    @elseif(Session::has('error'))
+        toastr.error("{{ Session::get('error') }}")
+    @endif
+</script>
+@yield('scripts')
 
 </body>
 </html>

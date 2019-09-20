@@ -11,10 +11,53 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'LandingController@index')->name('welcome');
+
+Route::get('/example', function (){ return view('example'); });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function (){
+
+    Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+
+    Route::get('/settings', 'SettingsController@index')->name('settings');
+
+    Route::get('/settings/officials', 'SettingsController@officials')->name('settings.officials');
+
+    Route::post('/settings/create/official', 'SettingsController@addOfficial')->name('settings.addOfficial');
+
+    Route::get('/settings/delete/official/{official}', 'SettingsController@deleteOfficial')->name('settings.deleteOfficial');
+
+    Route::post('/settings/create/position', 'SettingsController@addPosition')->name('settings.addPosition');
+
+    Route::get('/settings/delete/position/{position}', 'SettingsController@deletePosition')->name('settings.deletePosition');
+
+    Route::post('/settings/create/district', 'SettingsController@addDistrict')->name('settings.addDistrict');
+
+    Route::get('/settings/delete/district/{district}', 'SettingsController@deleteDistrict')->name('settings.deleteDistrict');
+
+    Route::post('/settings/create/constituency', 'SettingsController@addConstituency')->name('settings.addConstituency');
+
+    Route::get('/settings/delete/constituency/{constituency}', 'SettingsController@deleteConstituency')->name('settings.deleteConstituency');
+
+    Route::post('/settings/create/party', 'SettingsController@addParty')->name('settings.addParty');
+
+    Route::get('/settings/delete/party/{party}', 'SettingsController@deleteParty')->name('settings.deleteParty');
+
+    Route::post('/settings/create/lga', 'SettingsController@addLga')->name('settings.addLga');
+
+    Route::get('/settings/delete/lga/{lga}', 'SettingsController@deleteLga')->name('settings.deleteLga');
+
+    Route::post('/settings/create/state', 'SettingsController@addState')->name('settings.addState');
+
+    Route::get('/settings/delete/state/{state}', 'SettingsController@deleteState')->name('settings.deleteState');
+
+    Route::post('/settings/create/ward', 'SettingsController@addWard')->name('settings.addWard');
+
+    Route::get('/settings/delete/ward/{ward}', 'SettingsController@deleteWard')->name('settings.deleteWard');
+
+
+});

@@ -5,7 +5,17 @@
  */
 
 require('./bootstrap');
+// require('jquery.min.js');
+require('admin-lte/dist/js/demo.js');
+require('admin-lte/dist/js/pages/dashboard3.js');
+require('admin-lte/plugins/chart.js/Chart.min.js');
+// require('agency.min.js');
+// require('bootstrap.bundle.min.js');
+// require('jquery.easing.min.js');
+// require('jqBootstrapValidation.js');
+// require('contact_me.js');
 
+require('admin-lte');
 
 window.Vue = require('vue');
 

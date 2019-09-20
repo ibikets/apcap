@@ -17,7 +17,8 @@ class UsersTableSeeder extends Seeder
         User::create([
             'name' => 'Ibinabo Iketubosin',
             'email' => 'ibikets@gmail.com',
-            'password' => Hash::make('admin1234')
+            'password' => Hash::make('admin1234'),
+            'role_id' => 1
         ]);
     }
 }
