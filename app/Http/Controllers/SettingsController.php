@@ -278,7 +278,7 @@ class SettingsController extends Controller
             'mobile' => $request->mobile,
             'phone' => $request->phone,
             'profile' => $request->profile,
-            'picture' => 'uploads/officials/'.$picture_name,
+            'photo' => 'uploads/officials/'.$picture_name,
             'constituency_id' => $request->constituency_id,
             'state_id' => $request->state_id,
             'district_id' => $request->district_id,
