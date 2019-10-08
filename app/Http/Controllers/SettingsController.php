@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Constituency;
 use App\District;
 use App\Lga;
+use App\Minister;
 use App\Official;
 use App\Party;
-use App\Position;
+use App\Designation;
 use App\State;
 use App\Ward;
 use Illuminate\Http\Request;
@@ -29,20 +30,22 @@ class SettingsController extends Controller
             ->withParties(Party::orderBy('name', 'asc')->paginate(4))
             ->withLgas(Lga::orderBy('name', 'asc')->paginate(4))
             ->withWards(Ward::orderBy('name', 'asc')->paginate(4))
-            ->withStates(State::orderBy('name', 'asc')->paginate(4));
+            ->withStates(State::orderBy('name', 'asc')->paginate(4))
+            ->withDesignations(Designation::orderBy('name','asc')->paginate(4));
     }
 
     public function officials()
     {
         return view('settings.officials')
-            ->with('positions', Position::orderBy('name', 'asc')->paginate(3))
+            ->with('designations', Designation::orderBy('name', 'asc')->get())
             ->withOfficials(Official::orderBy('state_id', 'asc')->paginate(3))
             ->withParties(Party::all())
             ->withStates(State::all())
             ->withDistricts(District::all())
             ->withConstituencies(Constituency::all())
             ->withLgas(Lga::all())
-            ->withWards(Ward::all());
+            ->withWards(Ward::all())
+            ->withMinisters(Minister::orderBy('designation_id', 'asc')->paginate(4));
     }
 
     public function addDistrict(Request $request)
@@ -63,7 +66,7 @@ class SettingsController extends Controller
             return redirect()->back();
 
         }
-
+//        dd($request);
     }
 
     public function deleteDistrict(District $district)
@@ -232,19 +235,19 @@ class SettingsController extends Controller
 
     }
 
-    public function addPosition(Request $request)
+    public function addDesignation(Request $request)
     {
 
         $this->validate($request, [
             'name' => 'required|max:150|min:3',
         ]);
 
-        $position = Position::create([
+        $designation = Designation::create([
             'name' => $request->name,
         ]);
 
-        if ($position){
-            Session::flash('success', 'You have added a new Designation : '.  $position->name  );
+        if ($designation){
+            Session::flash('success', 'You have added a new Designation : '.  $designation->name  );
 
             return redirect()->back();
 
@@ -252,9 +255,9 @@ class SettingsController extends Controller
 
     }
 
-    public function deletePosition(Position $position)
+    public function deleteDesignation(Designation $designation)
     {
-        if ($position->delete()){
+        if ($designation->delete()){
             Session::flash('error', 'Designation Deleted');
             return redirect()->back();
         }
@@ -268,16 +271,19 @@ class SettingsController extends Controller
             'name' => 'required|max:150|min:3',
         ]);
 
-        $picture = $request->photo;
-        $picture_name = time().$picture->getClientOriginalName();
-        $picture->move('uploads/officials',$picture_name);
-
+        if (isset($request->photo)) {
+            $picture = $request->photo;
+            $picture_name = time() . $picture->getClientOriginalName();
+            $picture->move('uploads/officials', $picture_name);
+        }else{
+            $picture_name = 'img/avatar.png';
+        }
 
         $official = Official::create([
             'name' => $request->name,
-            'mobile' => $request->mobile,
-            'phone' => $request->phone,
-            'profile' => $request->profile,
+//            'mobile' => $request->mobile,
+//            'phone' => $request->phone,
+            'dob' => $request->dob,
             'photo' => 'uploads/officials/'.$picture_name,
             'constituency_id' => $request->constituency_id,
             'state_id' => $request->state_id,
@@ -286,7 +292,7 @@ class SettingsController extends Controller
             'ward_id' => $request->ward_id,
             'party_id' => $request->party_id,
             'party_card_no' => $request->party_card_no,
-            'position_id' => $request->position_id,
+            'designation_id' => $request->designation_id,
         ]);
 
         if ($official){
@@ -302,6 +308,48 @@ class SettingsController extends Controller
     {
         if ($official->delete()){
             Session::flash('error', 'Official Deleted');
+            return redirect()->back();
+        }
+
+    }
+
+    public function addMinister(Request $request)
+    {
+
+        $this->validate($request, [
+            'name' => 'required|max:150|min:3',
+        ]);
+
+        if (isset($request->photo)){
+            $picture = $request->photo;
+            $picture_name = time().$picture->getClientOriginalName();
+            $picture->move('uploads/ministers',$picture_name);
+        }
+
+        $minister = Minister::create([
+            'name' => $request->name,
+//            'mobile' => $request->mobile,
+//            'phone' => $request->phone,
+            'dob' => $request->dob,
+            'photo' => 'uploads/ministers/'.$picture_name,
+            'party_id' => $request->party_id,
+            'party_card_no' => $request->party_card_no,
+            'designation_id' => $request->designation_id,
+        ]);
+
+        if ($minister){
+            Session::flash('success', 'You have added a new Official : '.  $minister->name  );
+
+            return redirect()->back();
+
+        }
+
+    }
+
+    public function deleteMinister(Minister $minister)
+    {
+        if ($minister->delete()){
+            Session::flash('error', 'Minister Deleted');
             return redirect()->back();
         }
 

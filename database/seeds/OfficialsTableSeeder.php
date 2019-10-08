@@ -3,11 +3,13 @@
 use App\Constituency;
 use App\District;
 use App\Lga;
+use App\Minister;
 use App\Official;
 use App\Party;
-use App\Position;
+use App\Designation;
 use App\State;
 use App\Ward;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class OfficialsTableSeeder extends Seeder
@@ -22,10 +24,8 @@ class OfficialsTableSeeder extends Seeder
         //
         Official::create([
             'name' => 'Adeleke Mamora',
-            'phone' => 8037245117,
-            'mobile' => 8085580984,
-            'profile' => 'This is the profile of the honorable minister of state.............',
-            'position_id' => 1,
+            'dob' => Carbon::createFromDate('1982','05','31'),
+            'designation_id' => 1,
             'constituency_id'=>1,
             'state_id'=>1,
             'district_id'=>1,
@@ -35,8 +35,20 @@ class OfficialsTableSeeder extends Seeder
             'party_card_no'=>'APC/ABJ/01928002'
         ]);
 
-        Position::create([
-           'name'=>'Governor'
+        Minister::create([
+            'name' => 'Hassana Ameh',
+            'dob' => Carbon::createFromDate('1978','06','21'),
+            'designation_id' => 1,
+            'party_id'=>1,
+            'party_card_no'=>'APC/ABJ/01928002'
+        ]);
+
+        Designation::create([
+           'name'=>'FCT Minister'
+        ]);
+
+        Designation::create([
+            'name'=>'Senator'
         ]);
 
         State::create([

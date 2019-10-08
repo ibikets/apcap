@@ -16,9 +16,9 @@
                             <!-- Project Details Go Here -->
 
                             <h2 class="text-uppercase">{{ $official->name }}</h2>
-                            <p class="item-intro text-muted">{{ $official->position->name }}</p>
+                            <p class="item-intro text-muted">{{ $official->designation->name }}</p>
                             <img class="img-fluid d-block mx-auto" src="img/portfolio/01-full.jpg" alt="">
-                            <p>{{ $official->profile }}</p>
+                            {{--<p>{{ $official->profile }}</p>--}}
                             <ul class="list-inline">
                                 <li>Date: January 2017</li>
                                 <li>Client: Threads</li>

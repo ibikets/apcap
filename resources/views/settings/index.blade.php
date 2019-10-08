@@ -11,6 +11,8 @@
 
             @include('includes.modals.district_modal')
 
+            @include('includes.modals.position')
+
         </div>
         <!-- /.col-md-6 -->
         <div class="col-lg-6">

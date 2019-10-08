@@ -12,6 +12,9 @@
 */
 
 Route::get('/', 'LandingController@index')->name('welcome');
+//Route::get('/{link}', function ($link){
+//    return  view('welcome', ['link'=> $link]);
+//});
 
 Route::get('/example', function (){ return view('example'); });
 
@@ -31,9 +34,13 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function (){
 
     Route::get('/settings/delete/official/{official}', 'SettingsController@deleteOfficial')->name('settings.deleteOfficial');
 
-    Route::post('/settings/create/position', 'SettingsController@addPosition')->name('settings.addPosition');
+    Route::post('/settings/create/minister', 'SettingsController@addMinister')->name('settings.addMinister');
 
-    Route::get('/settings/delete/position/{position}', 'SettingsController@deletePosition')->name('settings.deletePosition');
+    Route::get('/settings/delete/minister/{minister}', 'SettingsController@deleteMinister')->name('settings.deleteMinister');
+
+    Route::post('/settings/create/designation', 'SettingsController@addDesignation')->name('settings.addDesignation');
+
+    Route::get('/settings/delete/designation/{designation}', 'SettingsController@deleteDesignation')->name('settings.deleteDesignation');
 
     Route::post('/settings/create/district', 'SettingsController@addDistrict')->name('settings.addDistrict');
 

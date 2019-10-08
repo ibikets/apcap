@@ -1,10 +1,10 @@
-@if(count($officials) > 0)
+@if(count($ministers) > 0)
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="card-title">Elected Officials</h3>
+            <h3 class="card-title">Appointed Officials</h3>
             <div class="card-tools">
-                @if(count($officials) > 0)
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#official">
+                @if(count($ministers) > 0)
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#minister">
                         Add
                     </button>
                 @endif
@@ -24,13 +24,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($officials as $official)
+                @foreach($ministers as $minister)
                     <tr>
-                        <td>{{ $official->name }}</td>
-                        <td>{{ $official->mobile }}</td>
-                        <td>{{ $official->designation->name }}</td>
+                        <td>{{ $minister->name }}</td>
+                        <td>{{ $minister->mobile }}</td>
+                        <td>{{ $minister->designation->name }}</td>
                         @if(auth()->user()->role_id != 3)
-                            <td><a href="{{ route('settings.deleteOfficial', $official->id) }}" class="btn btn-danger btn-sm pull-right"><i class="fas fa-trash"></i></a></td>
+                            <td><a href="{{ route('settings.deleteMinister', $minister->id) }}" class="btn btn-danger btn-sm pull-right"><i class="fas fa-trash"></i></a></td>
                         @endif
 
 
@@ -41,14 +41,14 @@
             </table>
 
         </div>
-        <div class=text-right>{{ $officials->links() }}</div>
+        <div class=text-right>{{ $ministers->links() }}</div>
     </div>
 @else
     <div class="card-body p-0">
         <div class="text-center">
-            <h4>Please setup the general configuration first before adding officials</h4>
-            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#official">
-                Add Elected Officials
+            <h4>No Ministers present in the Database</h4>
+            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#minister">
+                Add Appointed Officials
             </button>
             {{--<button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#designation">--}}
             {{--Add Designation--}}
@@ -62,18 +62,18 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="official" tabindex="-1" role="dialog" aria-labelledby="officialLabel" aria-hidden="true">
+<div class="modal fade" id="minister" tabindex="-1" role="dialog" aria-labelledby="ministerLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="officialLabel">Add New Official</h5>
+                <h5 class="modal-title" id="ministerLabel">Add New Official</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('settings.addOfficial') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('settings.addMinister') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
@@ -88,58 +88,12 @@
                         </div>
 
                         {{--<div class="form-group col-sm-6 col-md-6 col-lg-6">--}}
-                            {{--<label for="name">Secondary Mobile</label>--}}
-                            {{--<input type="number" name="phone" id="phone" class="form-control">--}}
+                        {{--<label for="name">Secondary Mobile</label>--}}
+                        {{--<input type="number" name="phone" id="phone" class="form-control">--}}
                         {{--</div>--}}
 
                     </div>
 
-                    <div class="row">
-                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                            <label for="name">State</label>
-                            <select name="state_id" id="state_id" class="form-control">
-                                @foreach($states as $state)
-                                    <option value="{{ $state->id }}">{{$state->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                            <label for="name">District</label>
-                            <select name="district_id" id="district_id" class="form-control">
-                                @foreach($districts as $district)
-                                    <option value="{{$district->id}}">{{$district->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                            <label for="name">Constituency</label>
-                            <select name="constituency_id" id="constituency_id" class="form-control">
-                                @foreach($constituencies as $constituency)
-                                    <option value="{{$constituency->id}}">{{$constituency->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                            <label for="name">LGA</label>
-                            <select name="lga_id" id="lga_id" class="form-control">
-                                @foreach($lgas as $lga)
-                                    <option value="{{ $lga->id }}">{{$lga->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                            <label for="name">Ward</label>
-                            <select name="ward_id" id="ward_id" class="form-control">
-                                @foreach($wards as $ward)
-                                    <option value="{{$ward->id}}">{{$ward->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
 
                     <div class="row">
 
@@ -174,12 +128,12 @@
                     </div>
 
                     {{--<div class="form-group col-sm-12 col-md-12 col-lg-12">--}}
-                        {{--<label for="name">Profile</label>--}}
-                        {{--<textarea class="form-control" name="profile" id="profile" cols="30" rows="5"></textarea>--}}
+                    {{--<label for="name">Profile</label>--}}
+                    {{--<textarea class="form-control" name="profile" id="profile" cols="30" rows="5"></textarea>--}}
                     {{--</div>--}}
 
                     <div class="form-group text-center">
-                        <button class="btn btn-success" type="submit">Add Official</button>
+                        <button class="btn btn-success" type="submit">Add Appointee</button>
                     </div>
 
                 </form>

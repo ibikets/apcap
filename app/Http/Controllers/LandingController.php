@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Designation;
 use App\Lga;
 use App\Official;
-use App\Position;
 use App\State;
 use App\Ward;
 use Illuminate\Http\Request;
@@ -21,8 +21,8 @@ class LandingController extends Controller
         //
         return view('welcome')
             ->withStates(State::orderBy('name', 'asc')->get())
-            ->withOfficials(Official::orderBy('name', 'asc')->get())
-            ->withPositions(Position::orderBy('name', 'asc')->get())
+            ->withOfficials(Official::orderBy('designation_id', 'asc')->get())
+            ->withDesignations(Designation::all())
             ->withLgas(Lga::orderBy('name', 'asc')->get())
             ->withWards(Ward::orderBy('name','asc')->get());
     }

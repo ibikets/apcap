@@ -7,16 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Official extends Model
 {
     //
-    protected $fillable = ['name', 'mobile', 'phone', 'profile', 'photo', 'constituency_id', 'ward_id', 'lga_id', 'state_id', 'position_id', 'party_id','party_card_no', 'district_id'];
+    protected $fillable =['name', 'dob', 'designation_id', 'constituency_id', 'state_id', 'district_id', 'lga_id', 'ward_id','party_id', 'party_card_no'];
 
-    public function position()
+    public function designation()
     {
-        return $this->belongsTo(Position::class);
+        return $this->belongsTo(Designation::class);
+    }
+
+    public function ward()
+    {
+        return $this->belongsTo(Ward::class);
     }
 
     public function state()
     {
         return $this->belongsTo(State::class);
+    }
+
+    public function party()
+    {
+        return $this->belongsTo(Party::class);
     }
 
     public function constituency()
@@ -34,8 +44,4 @@ class Official extends Model
         return $this->belongsTo(Lga::class);
     }
 
-    public function ward()
-    {
-        return $this->belongsTo(Ward::class);
-    }
 }

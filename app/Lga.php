@@ -11,17 +11,22 @@ class Lga extends Model
 
     public function constituency()
     {
-        $this->belongsTo(Constituency::class);
+        return $this->belongsTo(Constituency::class);
     }
 
     public function state()
     {
-        $this->belongsTo(State::class);
+        return $this->belongsTo(State::class);
     }
 
     public function wards()
     {
-        $this->hasMany(Ward::class);
+        return $this->hasMany(Ward::class);
+    }
+
+    public function officials()
+    {
+        return $this->hasMany(Official::class);
     }
 
 }

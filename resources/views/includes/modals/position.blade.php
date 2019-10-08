@@ -1,16 +1,16 @@
-{{--@if(count($positions) != 0)--}}
+{{--@if(count($designations) != 0)--}}
 <div class="card">
     <div class="card-header border-0">
-        <h3 class="card-title">Designation</h3>
+        <h3 class="card-title">Office</h3>
         <div class="card-tools">
-            @if(count($positions) > 0)
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#position">
+            @if(count($designations) > 0)
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#designation">
                     Add
                 </button>
             @endif
         </div>
     </div>
-    @if(count($positions) != 0)
+    @if(count($designations) != 0)
         <div class="card-body p-0">
             <table class="table table-striped table-valign-middle">
                 <thead>
@@ -22,11 +22,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($positions as $position)
+                @foreach($designations as $designation)
                     <tr>
-                        <td>{{ $position->name }}</td>
+                        <td>{{ $designation->name }}</td>
                         @if(auth()->user()->role_id != 3)
-                            <td><a href="{{ route('settings.deletePosition', $position->id) }}" class="btn btn-danger btn-sm pull-right"><i class="fas fa-trash"></i></a></td>
+                            <td><a href="{{ route('settings.deleteDesignation', $designation->id) }}" class="btn btn-danger btn-sm pull-right"><i class="fas fa-trash"></i></a></td>
                         @endif
 
 
@@ -37,13 +37,13 @@
             </table>
 
         </div>
-        <div class=text-right>{{ $positions->links() }}</div>
+        {{--<div class=text-right>{{ $designations->links() }}</div>--}}
     @else
         <div class="card-body p-0">
             <div class="text-center">
-                <h4>You have no designations in your database</h4>
-                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#position">
-                    Add Designation
+                <h4>You have no Offices in your database</h4>
+                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#designation">
+                    Add Office
                 </button>
             </div>
         </div>
@@ -55,18 +55,18 @@
 <!-- /.card -->
 
 <!-- Modal -->
-<div class="modal fade" id="position" tabindex="-1" role="dialog" aria-labelledby="positionLabel" aria-hidden="true">
+<div class="modal fade" id="designation" tabindex="-1" role="dialog" aria-labelledby="designationLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="positionLabel">Add New Designation</h5>
+                <h5 class="modal-title" id="designationLabel">Add New Office</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('settings.addPosition') }}" method="POST">
+                <form action="{{ route('settings.addDesignation') }}" method="POST">
                     @csrf
 
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
